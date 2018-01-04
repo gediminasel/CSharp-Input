@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Globalization;
 
 namespace Input {
     public static class Read {
@@ -63,14 +64,18 @@ namespace Input {
             string num = new string(Last(), 1);
             bool dot = false;
             while (char.IsDigit(Next()) || (!dot && (Last() == '.' || Last() == ','))) {
-                dot |= !char.IsDigit(Next());
+                dot |= !char.IsDigit(Last());
                 num += Last();
             }
             return num;
         }
 
         public static double Double() {
-            return double.Parse(FloatString());
+            return double.Parse(FloatString().Replace(',', '.'), CultureInfo.InvariantCulture);
+        }
+
+        public static float Float() {
+            return float.Parse(FloatString().Replace(',', '.'), CultureInfo.InvariantCulture);
         }
 
         public static char Char() {
