@@ -89,8 +89,7 @@ namespace Input {
         public static string String() {
             while (char.IsWhiteSpace(Last()))
                 Next();
-            string ret = "";
-            ret += Last();
+            string ret = new string(Last(), 1);
             while (!char.IsWhiteSpace(Next()))
                 ret += Last();
 
@@ -115,6 +114,10 @@ namespace Input {
 
         public static double To(out double a) {
             return a = Double();
+        }
+
+        public static float To(out float a) {
+            return a = Float();
         }
     }
 }
