@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Globalization;
 
@@ -6,12 +6,11 @@ namespace Input {
     public static class Read {
         static string line;
         static int pos;
+        static StreamReader file = null;
 
         public static void UseFile(string name) {
-            using (StreamReader file = new StreamReader(name)) {
-                line = file.ReadToEnd();
-            }
-            pos = 0;
+            file = new StreamReader(name);
+            line = null;
         }
 
         public static void UseInput(string input) {
@@ -20,6 +19,15 @@ namespace Input {
         }
 
         static string GetLine() {
+            if (file != null) {
+                string l = file.ReadLine();
+                if (file.EndOfStream) {
+                    file.Close();
+                    file = null;
+                }
+                return l;
+            }
+
             return Console.ReadLine();
         }
 
@@ -92,7 +100,6 @@ namespace Input {
             string ret = new string(Last(), 1);
             while (!char.IsWhiteSpace(Next()))
                 ret += Last();
-
             return ret;
         }
 
